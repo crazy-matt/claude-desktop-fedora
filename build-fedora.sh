@@ -4,6 +4,10 @@ set -e
 # Update this URL when a new version of Claude Desktop is released
 CLAUDE_DOWNLOAD_URL="https://storage.googleapis.com/osprey-downloads-c02f6a0d-347c-492b-a752-3e0651722e97/nest-win-x64/Claude-Setup-x64.exe"
 
+# Official Claude Desktop download URL (automatically redirects to latest version)
+# This URL always points to the most recent Windows installer
+#CLAUDE_DOWNLOAD_URL="https://claude.ai/api/desktop/win32/x64/exe/latest/redirect"
+
 # Inclusive check for Fedora-based system
 is_fedora_based() {
     if [ -f "/etc/fedora-release" ]; then
@@ -364,7 +368,7 @@ EOF
 cat > "$INSTALL_DIR/bin/claude-desktop" << EOF
 #!/bin/bash
 LOG_FILE="\$HOME/claude-desktop-launcher.log"
-electron /usr/lib64/claude-desktop/app.asar --ozone-platform-hint=auto --enable-logging=file --log-file=\$LOG_FILE --log-level=INFO "\$@"
+/opt/electron/electron /usr/lib64/claude-desktop/app.asar --ozone-platform-hint=auto --enable-logging=file --log-file=\$LOG_FILE --log-level=INFO "\$@"
 EOF
 chmod +x "$INSTALL_DIR/bin/claude-desktop"
 
@@ -465,3 +469,5 @@ else
     echo "❌ Failed to build RPM package"
     exit 1
 fi
+
+echo "RPM_FILE=$RPM_FILE" >/tmp/claude-desktop-fedora-build.env
