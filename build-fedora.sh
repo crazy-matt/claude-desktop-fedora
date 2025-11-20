@@ -368,7 +368,7 @@ EOF
 cat > "$INSTALL_DIR/bin/claude-desktop" << EOF
 #!/bin/bash
 LOG_FILE="\$HOME/claude-desktop-launcher.log"
-/opt/electron/electron /usr/lib64/claude-desktop/app.asar --ozone-platform-hint=auto --enable-logging=file --log-file=\$LOG_FILE --log-level=INFO "\$@"
+electron /usr/lib64/claude-desktop/app.asar --ozone-platform-hint=auto --enable-logging=file --log-file=\$LOG_FILE --log-level=INFO "\$@"
 EOF
 chmod +x "$INSTALL_DIR/bin/claude-desktop"
 
